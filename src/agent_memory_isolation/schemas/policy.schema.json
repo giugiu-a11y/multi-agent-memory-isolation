@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/giugiu-a11y/multi-agent-memory-isolation/schemas/policy.schema.json",
+  "title": "Multi-Agent Memory Isolation Policy",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "agent_notes_are_private",
+    "shared_memory_requires_evidence",
+    "handoff_includes_only_shared_memory_by_default",
+    "allowed_shared_kinds",
+    "allowed_note_kinds"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "agent_notes_are_private": {
+      "const": true
+    },
+    "shared_memory_requires_evidence": {
+      "const": true
+    },
+    "handoff_includes_only_shared_memory_by_default": {
+      "const": true
+    },
+    "allowed_shared_kinds": {
+      "type": "array",
+      "items": {
+        "enum": ["fact", "decision", "risk", "open_question"]
+      }
+    },
+    "allowed_note_kinds": {
+      "type": "array",
+      "items": {
+        "enum": ["observation", "decision", "risk", "question"]
+      }
+    }
+  }
+}

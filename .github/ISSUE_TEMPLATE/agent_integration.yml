@@ -1,0 +1,25 @@
+name: Agent integration
+description: Request or improve an agent integration.
+title: "[Integration]: "
+labels: ["agent-integration"]
+body:
+  - type: input
+    id: agent
+    attributes:
+      label: Agent or tool
+      placeholder: Codex, Claude Code, Cursor, OpenCode, Aider, Cline, custom orchestrator
+    validations:
+      required: true
+  - type: textarea
+    id: workflow
+    attributes:
+      label: Workflow
+      description: How does the agent run today?
+    validations:
+      required: true
+  - type: textarea
+    id: desired
+    attributes:
+      label: Desired Multi-Agent Memory Isolation behavior
+    validations:
+      required: true

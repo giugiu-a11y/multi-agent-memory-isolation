@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -e ".[dev]"
+      - run: ruff check .
+      - run: ruff format --check .
+      - run: pytest
+      - run: python -m compileall -q src tests
+      - run: bash scripts/privacy_check.sh
+      - run: python -m build
+      - run: python -m twine check dist/*
+      - run: agent-memory-isolation --version
+      - run: agent-memory-isolation --root /tmp/agent-memory-isolation-ci init --force
+      - run: agent-memory-isolation --root /tmp/agent-memory-isolation-ci promote --agent codex --kind fact --text "CI shared fact" --evidence "CI smoke"
+      - run: agent-memory-isolation --root /tmp/agent-memory-isolation-ci handoff --agent codex --task "CI smoke" --output /tmp/agent-memory-isolation-ci/handoff.md
+      - run: agent-memory-isolation --root /tmp/agent-memory-isolation-ci doctor --format json | python -c 'import json,sys; payload=json.load(sys.stdin); assert payload["ok"] is True; assert payload["root"] == "."; assert payload["context_dir"] == ".agent-memory"'
+      - run: bash scripts/prepublish_check.sh

@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/giugiu-a11y/multi-agent-memory-isolation/schemas/agent-note.schema.json",
+  "title": "Multi-Agent Memory Isolation Agent Note Record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "schema_version",
+    "kind",
+    "agent",
+    "visibility",
+    "status",
+    "text",
+    "evidence",
+    "created_at"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 8
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "kind": {
+      "enum": ["observation", "decision", "risk", "question"]
+    },
+    "agent": {
+      "type": "string",
+      "pattern": "^[a-z0-9._-]+$"
+    },
+    "visibility": {
+      "const": "agent_private"
+    },
+    "status": {
+      "const": "draft"
+    },
+    "text": {
+      "type": "string",
+      "minLength": 1
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "created_at": {
+      "type": "string"
+    }
+  }
+}

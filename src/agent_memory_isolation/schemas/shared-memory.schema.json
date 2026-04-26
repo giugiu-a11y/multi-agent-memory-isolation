@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/giugiu-a11y/multi-agent-memory-isolation/schemas/shared-memory.schema.json",
+  "title": "Multi-Agent Memory Isolation Shared Memory Record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "schema_version",
+    "kind",
+    "agent",
+    "visibility",
+    "status",
+    "text",
+    "evidence",
+    "created_at"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 8
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "kind": {
+      "enum": ["fact", "decision", "risk", "open_question"]
+    },
+    "agent": {
+      "type": "string",
+      "pattern": "^[a-z0-9._-]+$"
+    },
+    "visibility": {
+      "const": "shared"
+    },
+    "status": {
+      "enum": ["promoted", "canonical"]
+    },
+    "text": {
+      "type": "string",
+      "minLength": 1
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "source_note": {
+      "type": ["string", "null"]
+    },
+    "created_at": {
+      "type": "string"
+    }
+  }
+}

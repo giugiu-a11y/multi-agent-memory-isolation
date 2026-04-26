@@ -1,0 +1,12 @@
+{
+  "extends": [
+    "config:recommended",
+    "helpers:pinGitHubActionDigests"
+  ],
+  "labels": ["dependencies"],
+  "rangeStrategy": "pin",
+  "separateMajorMinor": true,
+  "minimumReleaseAge": "3 days",
+  "prHourlyLimit": 2,
+  "prConcurrentLimit": 6
+}
