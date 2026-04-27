@@ -48,6 +48,7 @@ Required before public visibility:
 - docs include architecture, integrations, demo, security, roadmap;
 - private GitHub repo exists before public visibility;
 - CI passes on Python 3.10, 3.11, and 3.12;
+- Security workflow passes with `gitleaks detect --no-git --source . --redact --no-banner`;
 - branch protection is enabled after pushing;
 - secret scanning and push protection are enabled if available;
 - release notes are written;

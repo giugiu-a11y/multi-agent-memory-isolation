@@ -69,6 +69,16 @@ else
   contains_fixed() { grep -F "$1" "${@:2}" >/dev/null; }
 fi
 
+SECURITY_WORKFLOW=".github/workflows/security.yml"
+if [[ ! -f "$SECURITY_WORKFLOW" ]]; then
+  echo "Multi-Agent Memory Isolation prepublish checks expected ${SECURITY_WORKFLOW}." >&2
+  exit 1
+fi
+if ! contains_fixed "gitleaks detect --no-git --source . --redact --no-banner" "$SECURITY_WORKFLOW"; then
+  echo "Multi-Agent Memory Isolation prepublish checks expected an explicit gitleaks scan command in ${SECURITY_WORKFLOW}." >&2
+  exit 1
+fi
+
 if command -v uv >/dev/null 2>&1; then
   run_ruff() { uv run --extra dev --python "$PYTHON_BIN" ruff "$@"; }
   run_pytest() { uv run --extra dev --python "$PYTHON_BIN" pytest "$@"; }
