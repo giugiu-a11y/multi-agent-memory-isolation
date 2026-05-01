@@ -78,6 +78,14 @@ if ! contains_fixed "gitleaks detect --no-git --source . --redact --no-banner" "
   echo "Multi-Agent Memory Isolation prepublish checks expected an explicit gitleaks scan command in ${SECURITY_WORKFLOW}." >&2
   exit 1
 fi
+if ! contains_fixed "workflow_dispatch:" "$SECURITY_WORKFLOW"; then
+  echo "Multi-Agent Memory Isolation prepublish checks expected workflow_dispatch in ${SECURITY_WORKFLOW}." >&2
+  exit 1
+fi
+if ! contains_fixed "schedule:" "$SECURITY_WORKFLOW"; then
+  echo "Multi-Agent Memory Isolation prepublish checks expected a scheduled run in ${SECURITY_WORKFLOW}." >&2
+  exit 1
+fi
 
 if command -v uv >/dev/null 2>&1; then
   run_ruff() { uv run --extra dev --python "$PYTHON_BIN" ruff "$@"; }

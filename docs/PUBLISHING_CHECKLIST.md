@@ -26,7 +26,7 @@ Run:
 ```bash
 agent-memory-isolation doctor
 bash scripts/privacy_check.sh
-gitleaks detect --source . --redact
+gitleaks detect --no-git --source . --redact --no-banner
 ```
 
 Required:
