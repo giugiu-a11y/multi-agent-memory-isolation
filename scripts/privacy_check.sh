@@ -8,6 +8,7 @@ GITLEAKS_BIN="$(command -v gitleaks || true)"
 
 SOURCE_GLOBS=(
   --hidden
+  --glob '!.git'
   --glob '!.git/**'
   --glob '!.venv/**'
   --glob '!dist/**'
@@ -28,6 +29,7 @@ else
   SCAN_CMD=(
     grep -RInE
     --exclude-dir=.git
+    --exclude=.git
     --exclude-dir=.venv
     --exclude-dir=dist
     --exclude-dir=build
