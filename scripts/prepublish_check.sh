@@ -74,8 +74,12 @@ if [[ ! -f "$SECURITY_WORKFLOW" ]]; then
   echo "Multi-Agent Memory Isolation prepublish checks expected ${SECURITY_WORKFLOW}." >&2
   exit 1
 fi
-if ! contains_fixed "gitleaks detect --no-git --source . --redact --no-banner" "$SECURITY_WORKFLOW"; then
-  echo "Multi-Agent Memory Isolation prepublish checks expected an explicit gitleaks scan command in ${SECURITY_WORKFLOW}." >&2
+if ! contains_fixed "gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e" "$SECURITY_WORKFLOW"; then
+  echo "Multi-Agent Memory Isolation prepublish checks expected the pinned Gitleaks Action in ${SECURITY_WORKFLOW}." >&2
+  exit 1
+fi
+if ! contains_fixed "fetch-depth: 0" "$SECURITY_WORKFLOW"; then
+  echo "Multi-Agent Memory Isolation prepublish checks expected complete Git history in ${SECURITY_WORKFLOW}." >&2
   exit 1
 fi
 
